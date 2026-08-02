@@ -1,0 +1,1575 @@
+{
+  "name": "Dynamic Agronomic Router",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1536,
+        1536
+      ],
+      "id": "aae6d0ae-20de-4cdf-aaad-a4cbe682c62b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "content": "# DUMMY DATA",
+        "height": 80,
+        "width": 2736
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        192,
+        1056
+      ],
+      "id": "8775da22-22ac-4e45-8aac-51e5652e1104",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Loop",
+      "typeVersion": 1,
+      "position": [
+        1712,
+        1648
+      ],
+      "id": "f646cacd-4f18-4721-b375-5f2a8866e693",
+      "placeholder": true
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564",
+          "mode": "list",
+          "cachedResultName": "Dynamic_Agronomic",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1363362372,
+          "mode": "list",
+          "cachedResultName": "Dummy Data",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit#gid=1363362372"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        1616
+      ],
+      "id": "d7b2ba30-e515-4f0b-bfa1-7bb23968877f",
+      "name": "Commodity List",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CVk7yQMP6tYVIzmM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564",
+          "mode": "list",
+          "cachedResultName": "Dynamic_Agronomic",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1684333326,
+          "mode": "list",
+          "cachedResultName": "Dummy Logistics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit#gid=1684333326"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        1888
+      ],
+      "id": "ce18296d-303e-4515-a326-a0888297ffac",
+      "name": "Logistics",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CVk7yQMP6tYVIzmM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        688,
+        1760
+      ],
+      "id": "9e5e07ed-476f-4351-8c0f-1256c061b7cd",
+      "name": "Merge1"
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "value": "https://app.notion.com/p/Master-Ledger-3ae760b827bf80e88248fdb2a62c2413?source=copy_link",
+          "mode": "url"
+        },
+        "title": "=Master Ledger",
+        "contentType": "markdown",
+        "markdown": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        2400,
+        1520
+      ],
+      "id": "fdb7f345-69c9-4cf2-996b-515c38626856",
+      "name": "Master Ledger2",
+      "credentials": {
+        "notionApi": {
+          "id": "9MzyzUGXRpU2vX2d",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1936,
+        1728
+      ],
+      "id": "c359ae3a-6ca1-47ff-9964-23dd55d6f186",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "8bR8C4Lf1eeH0K1b",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a logistics dispatch manifest from the following arbitrage opportunity.\n\n{{ JSON.stringify($json, null, 2) }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are an Agricultural Supply Chain and Logistics Intelligence Agent.\n\nYour role is to analyze profitable commodity arbitrage opportunities generated by the Market Arbitrage Engine and produce a professional logistics dispatch manifest.\n\nYour objectives are:\n\n1. Verify that the opportunity is profitable.\n2. Summarize the buying market and selling market.\n3. Explain why the route is profitable.\n4. Highlight the expected spread, logistics cost and estimated net profit.\n5. Recommend the most suitable shipment.\n6. Mention operational considerations such as road distance, fuel cost impact and market timing where relevant.\n7. Produce a concise but professional report suitable for logistics managers.\n\nNever invent prices or markets.\n\nOnly use the values supplied in the input.\n\nIf profit is zero or negative, state that the shipment should not be executed.\n\nKeep responses factual, concise and decision-oriented.\n\nOutput must always be valid Markdown."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1936,
+        1520
+      ],
+      "id": "593de16f-8679-4692-a20e-5c15c44f35cc",
+      "name": "Agricultural Supply Chain and Logistics Intelligence Agent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8ba7baa6-eb7b-40d4-95c1-b26dab3d18d3",
+              "leftValue": "={{ $json.is_profitable }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1200,
+        1760
+      ],
+      "id": "73bfb8d8-ff31-4086-af71-d158e2b520d8",
+      "name": "Routes Profitable & None Profitable"
+    },
+    {
+      "parameters": {
+        "url": "https://bv9eacztqc.execute-api.us-east-1.amazonaws.com/staging/prices",
+        "options": {}
+      },
+      "id": "0264ff25-f14e-4241-b52d-df72e65b71a4",
+      "name": "HarvestIQ - All Prices2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -352,
+        336
+      ],
+      "retryOnFail": false,
+      "maxTries": 5,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "https://api.olaofnorth.com/ecommerce/api/v1/commodities/summaries?PageSize=100",
+        "options": {}
+      },
+      "id": "fe343c13-67a0-41b4-8859-571179a0a9bd",
+      "name": "Ola of North - All Summaries2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -352,
+        528
+      ],
+      "retryOnFail": false,
+      "maxTries": 5,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "https://foodprices.ng/tables/realtime-prices/?scope=market&per_page=100",
+        "options": {}
+      },
+      "id": "243ed59a-2b92-4074-be68-1a60ee2ce1e1",
+      "name": "FoodPrices.ng - All Lagos2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -352,
+        112
+      ],
+      "retryOnFail": false,
+      "maxTries": 5,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "url": "https://jkddlrliznkvuukganjs.supabase.co/rest/v1/prices?select=*,commodity:commodities(name),market:markets(name,state,city,region)&order=date.desc&limit=200",
+        "authentication": "genericCredentialType",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprZGRscmxpem5rdnV1a2dhbmpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkwMzk4NjAsImV4cCI6MjA4NDYxNTg2MH0.yEtHNZm0dit_HYUgKMY7OIVh14wIJaS0QJoeEolVCHk"
+            },
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImprZGRscmxpem5rdnV1a2dhbmpzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjkwMzk4NjAsImV4cCI6MjA4NDYxNTg2MH0.yEtHNZm0dit_HYUgKMY7OIVh14wIJaS0QJoeEolVCHk"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a6d7cec6-2d21-4ae2-845c-9f68edc2fb73",
+      "name": "PriceNija - All Prices2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -352,
+        -80
+      ],
+      "retryOnFail": false,
+      "maxTries": 5,
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -880,
+        240
+      ],
+      "id": "1d567e40-36dc-43f7-ba09-af6159b12dcc",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "numberInputs": 4
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        192,
+        224
+      ],
+      "id": "04cbd73f-9089-4d5c-84ea-b6b6d8c29e4b",
+      "name": "Merge2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5a8f5399-f624-43b8-8c52-5185bf529381",
+              "leftValue": "={{ $json.tonnage_convertible }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        736,
+        256
+      ],
+      "id": "978c10e1-5162-48f2-b736-178396a368e2",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ==========================================================\n// MARKET DATA CLEANING + TONNAGE ENRICHMENT\n//\n// n8n Code Node — JavaScript, \"Run Once for All Items\" mode\n//\n// PART 1 — CLASSIFY & CLEAN raw items from four possible source\n// shapes (HarvestIQ, OlaNorth, FoodPrices, PriceNija) into one\n// consistent record shape.\n//\n// PART 2 — TONNAGE ENRICHMENT: adds price_per_5_tonnes to every\n// record, resolving kg-per-unit via a priority chain (see the\n// block above Part 2 for the full explanation), and NEVER\n// inventing a weight it can't otherwise justify.\n// ==========================================================\n\nfunction normalizeRegion(r) {\n  if (!r) return null;\n  const key = String(r).toLowerCase().replace(/[\\s-]+/g, '');\n  const map = {\n    northwest: 'North-West',\n    southwest: 'South-West',\n    southeast: 'South-East',\n    northcentral: 'North-Central',\n    southsouth: 'South-South',\n    northeast: 'North-East',\n  };\n  return map[key] || r;\n}\n\nfunction inferRegion(market, state) {\n  const m = (market || '').toLowerCase();\n  const s = (state || '').toLowerCase();\n  const pairs = [\n    [['kano', 'kaduna', 'katsina', 'jigawa', 'zamfara', 'sokoto', 'kebbi'], 'North-West'],\n    [['lagos', 'ibadan', 'oyo', 'osun', 'ondo', 'ekiti', 'ogun'], 'South-West'],\n    [['onitsha', 'enugu', 'anambra', 'imo', 'abia', 'ebonyi'], 'South-East'],\n    [['abuja', 'minna', 'makurdi', 'fct', 'niger', 'benue', 'kogi', 'kwara', 'plateau', 'nasarawa'], 'North-Central'],\n    [['river', 'delta', 'akwa', 'cross river', 'bayelsa', 'edo'], 'South-South'],\n    [['borno', 'yobe', 'adamawa', 'bauchi', 'gombe', 'taraba'], 'North-East'],\n  ];\n  for (const [keywords, region] of pairs) {\n    if (keywords.some((k) => m.includes(k) || s.includes(k))) return region;\n  }\n  return null;\n}\n\nfunction extractState(market) {\n  if (!market) return null;\n  const match = market.match(/\\((.+?)\\)/);\n  if (match) {\n    const stateMap = { Benue: 'Benue', Lagos: 'Lagos', Oyo: 'Oyo', Niger: 'Niger' };\n    return stateMap[match[1]] || match[1];\n  }\n  return null;\n}\n\nfunction trendFromChange(val) {\n  const n = Number(val);\n  if (val === undefined || val === null || Number.isNaN(n)) return null;\n  if (n > 0) return 'up';\n  if (n < 0) return 'down';\n  return 'stable';\n}\n\n// ==========================================================\n// ROBUST NAME/OBJECT EXTRACTION\n//\n// Some PriceNija-shaped records have shown up with `commodity`\n// and `market` as raw JSON-STRINGS (e.g. '{\"name\":\"Maize (White)\"}')\n// instead of live nested objects — likely from a raw record that\n// bypassed proper cleaning somewhere upstream (e.g. an export step\n// that serializes objects to text). This makes extraction resilient\n// to all three shapes it might arrive in:\n//   - a live object          { name: \"Maize (White)\", state: \"Kano\", ... }\n//   - a JSON-string of that   '{\"name\":\"Maize (White)\", \"state\":\"Kano\", ...}'\n//   - a plain string          \"Maize (White)\"\n// ==========================================================\n\nfunction tryParseJsonObject(str) {\n  if (typeof str !== 'string') return null;\n  const trimmed = str.trim();\n  if (!trimmed.startsWith('{')) return null;\n  try {\n    const parsed = JSON.parse(trimmed);\n    return parsed && typeof parsed === 'object' ? parsed : null;\n  } catch (e) {\n    return null;\n  }\n}\n\n// Resolves a commodity/market field to its underlying object form\n// (with .name, .state, .region, .lat, .lng etc.) whether it arrived\n// as a live object or a JSON-stringified one. Returns null if it's\n// just a plain string (no extra fields to recover).\nfunction asObject(value) {\n  if (value && typeof value === 'object' && !Array.isArray(value)) return value;\n  return tryParseJsonObject(value);\n}\n\n// Resolves just the display name, whichever shape the field arrived in.\nfunction asName(value) {\n  const obj = asObject(value);\n  if (obj) return obj.name;\n  return typeof value === 'string' ? value : value;\n}\n\n// ==========================================================\n// PART 2 HELPERS — TONNAGE CONVERSION\n//\n// Attaches a reliable price_per_5_tonnes to every record, resolving\n// kg-per-unit via this priority chain (each used only if the one\n// above isn't available):\n//\n//   1. PROVIDED     — the record's own kgPerUnit field.\n//   2. UNIT STRING  — the unit literally states its weight,\n//                     e.g. \"50kg Bag\" -> 50, \"10kg\" -> 10.\n//   3. CROSS-ROW    — another row of the SAME commodity + unit\n//                     elsewhere in this batch already has a known\n//                     weight (from #1 or #2). Matching uses a\n//                     normalized \"base commodity\" name\n//                     (parenthetical qualifiers + plurals\n//                     stripped), so \"Maize (White)\" can borrow the\n//                     weight already known for \"Maize\".\n//   4. PRICE-RATIO  — for the SAME commodity, uses rows with a\n//                     known weight (steps 1-3) at the SAME market\n//                     (preferred) or elsewhere to compute an\n//                     average price-per-kg, then divides this\n//                     row's price by that rate to back out an\n//                     IMPLIED weight. This is an ESTIMATE, not a\n//                     verified fact — retail units often carry a\n//                     per-kg markup vs bulk units, so this can run\n//                     light on small retail sizes. Always tagged\n//                     kg_per_unit_source: \"price_ratio_estimate\".\n//   5. UNRESOLVED   — no reliable path found. price_per_5_tonnes stays\n//                     null and tonnage_convertible: false — no\n//                     invented numbers presented as fact.\n//\n// Volume units (Liter, 750ml, 1.5L) are never converted to weight —\n// that needs a density figure we don't have.\n// ==========================================================\n\nfunction safeFloat(value) {\n  if (value === null || value === undefined) return null;\n  const text = String(value).replace(/,/g, '').replace(/₦/g, '').trim();\n  if (text === '') return null;\n  const num = Number(text);\n  return Number.isNaN(num) ? null : num;\n}\n\n// Lot size the price-per-tonne column is expressed against. Set to\n// 5 tonnes to match the assumed truck capacity used for logistics\n// cost-per-tonne elsewhere in this pipeline, so a market's\n// price_per_5_tonnes lines up directly with one full truckload's\n// logistics cost. Change this single constant to re-basis everything\n// (e.g. 1000 for a plain per-tonne figure, 30000 for a 30-tonne\n// articulated truck).\nconst TONNE_LOT_SIZE_KG = 5000;\n\nfunction clean(value) {\n  return value === null || value === undefined ? '' : String(value).trim();\n}\n\nfunction parseKgFromUnitString(unitStr) {\n  const u = clean(unitStr).toLowerCase();\n  if (u === 'kg') return 1;\n  const match = u.match(/(\\d+(\\.\\d+)?)\\s*kg/);\n  if (!match) return null;\n  const kg = parseFloat(match[1]);\n  return kg > 0 ? kg : null;\n}\n\nfunction normalizeCommodityBase(name) {\n  const s = clean(name)\n    .replace(/\\([^)]*\\)/g, '')\n    .replace(/\\s+/g, ' ')\n    .trim()\n    .toLowerCase();\n  return s.replace(/s$/, '');\n}\n\nfunction normalizeUnit(unit) {\n  return clean(unit).toLowerCase();\n}\n\nfunction averagePricePerKg(anchors) {\n  if (!anchors || anchors.length === 0) return null;\n  const rates = anchors.map((a) => a.price / a.kg).filter((r) => Number.isFinite(r) && r > 0);\n  if (rates.length === 0) return null;\n  return rates.reduce((sum, r) => sum + r, 0) / rates.length;\n}\n\n// Runs the full tonnage resolution chain over an array of cleaned\n// record objects (mutates and returns them enriched).\nfunction enrichWithTonnage(records) {\n  // Pass 1 — PROVIDED or UNIT STRING only.\n  for (const row of records) {\n    const explicit = safeFloat(row.kgPerUnit);\n    if (explicit !== null && explicit > 0) {\n      row._kg = explicit;\n      row._kgSource = 'provided';\n      continue;\n    }\n    const parsed = parseKgFromUnitString(row.unit);\n    if (parsed !== null) {\n      row._kg = parsed;\n      row._kgSource = 'parsed_from_unit_string';\n      continue;\n    }\n    row._kg = null;\n    row._kgSource = null;\n  }\n\n  // Pass 2 — build lookup/anchor tables from what Pass 1 found.\n  const knownWeightByCommodityUnit = new Map();\n  const anchorsByCommodityMarket = new Map();\n  const anchorsByCommodityOnly = new Map();\n\n  for (const row of records) {\n    if (row._kg === null) continue;\n\n    const base = normalizeCommodityBase(row.commodity);\n    const unit = normalizeUnit(row.unit);\n    const market = clean(row.market).toLowerCase();\n    const price = safeFloat(row.price);\n\n    const cuKey = `${base}|||${unit}`;\n    if (!knownWeightByCommodityUnit.has(cuKey)) {\n      knownWeightByCommodityUnit.set(cuKey, row._kg);\n    }\n\n    if (price !== null) {\n      const cmKey = `${base}|||${market}`;\n      if (!anchorsByCommodityMarket.has(cmKey)) anchorsByCommodityMarket.set(cmKey, []);\n      anchorsByCommodityMarket.get(cmKey).push({ kg: row._kg, price });\n\n      if (!anchorsByCommodityOnly.has(base)) anchorsByCommodityOnly.set(base, []);\n      anchorsByCommodityOnly.get(base).push({ kg: row._kg, price });\n    }\n  }\n\n  // Pass 3 — CROSS-ROW, then PRICE-RATIO, in that order.\n  const volumeUnits = ['liter', '750ml', '1.5l'];\n\n  for (const row of records) {\n    if (row._kg !== null) continue;\n\n    const base = normalizeCommodityBase(row.commodity);\n    const unit = normalizeUnit(row.unit);\n    const market = clean(row.market).toLowerCase();\n    const price = safeFloat(row.price);\n\n    if (volumeUnits.includes(unit)) {\n      row._kg = null;\n      row._kgSource = 'unresolved_volume_unit';\n      continue;\n    }\n\n    const cuKey = `${base}|||${unit}`;\n    if (knownWeightByCommodityUnit.has(cuKey)) {\n      row._kg = knownWeightByCommodityUnit.get(cuKey);\n      row._kgSource = 'cross_row_known_unit_weight';\n      continue;\n    }\n\n    if (price === null) {\n      row._kg = null;\n      row._kgSource = 'unresolved';\n      continue;\n    }\n\n    const cmKey = `${base}|||${market}`;\n    let rate = averagePricePerKg(anchorsByCommodityMarket.get(cmKey));\n    let anchorScope = 'same_market';\n\n    if (rate === null) {\n      rate = averagePricePerKg(anchorsByCommodityOnly.get(base));\n      anchorScope = 'cross_market';\n    }\n\n    if (rate !== null) {\n      row._kg = Math.round((price / rate) * 1000) / 1000;\n      row._kgSource = 'price_ratio_estimate';\n      row._anchorScope = anchorScope;\n      continue;\n    }\n\n    row._kg = null;\n    row._kgSource = 'unresolved';\n  }\n\n  // Pass 4 — attach final tonnage fields.\n  for (const row of records) {\n    const price = safeFloat(row.price);\n    const kg = row._kg;\n\n    row.kg_per_unit_resolved = kg;\n    row.kg_per_unit_source = row._kgSource;\n    if (row._anchorScope) row.price_ratio_anchor_scope = row._anchorScope;\n\n    if (kg !== null && kg > 0 && price !== null) {\n      row.price_per_5_tonnes = Math.round((price / kg) * TONNE_LOT_SIZE_KG * 100) / 100;\n      row.tonnage_convertible = true;\n    } else {\n      row.price_per_5_tonnes = null;\n      row.tonnage_convertible = false;\n    }\n\n    delete row._kg;\n    delete row._kgSource;\n    delete row._anchorScope;\n  }\n\n  return records;\n}\n\n// ==========================================================\n// PART 1 — CLASSIFY & CLEAN\n// ==========================================================\n\nconst cleaned = [];\nconst unrecognized = [];\n\nfor (const item of $input.all()) {\n  const j = item.json;\n  if (!j || typeof j !== 'object') {\n    unrecognized.push(j);\n    continue;\n  }\n\n  // --- HarvestIQ: { success, count, prices: [...], fetchedAt } ---\n  if (Array.isArray(j.prices)) {\n    j.prices.forEach((p) => {\n      const entry = {\n        source: 'HarvestIQ',\n        commodity: p.crop,\n        market: p.market,\n        price: p.pricePerUnit,\n        unit: p.unit,\n        kgPerUnit: p.kgPerUnit,\n        priceType: 'wholesale',\n        currency: 'NGN',\n        updatedAt: p.updatedAt,\n      };\n      const state = extractState(p.market);\n      if (state) entry.state = state;\n      const region = normalizeRegion(inferRegion(p.market, state));\n      if (region) entry.region = region;\n      if (p.trend) entry.trend = p.trend;\n      if (p.signal) entry.signal = p.signal;\n      cleaned.push(entry);\n    });\n    continue;\n  }\n\n  // --- Ola of North: { data: { pageData, record: [...] }, message, succeeded, ... } ---\n  if (j.data && Array.isArray(j.data.record)) {\n    j.data.record.forEach((p) => {\n      const entry = {\n        source: 'OlaNorth',\n        commodity: p.name,\n        price: p.currentPrice,\n        unit: p.unit,\n        priceType: 'market',\n        currency: 'NGN',\n        updatedAt: p.lastUpdated || new Date().toISOString(),\n      };\n      const region = normalizeRegion(p.topRegion);\n      if (region) entry.region = region;\n      if (p.category) entry.category = p.category;\n      const trend = trendFromChange(p.pricePercentageChange);\n      if (trend) entry.trend = trend;\n      if (typeof p.pricePercentageChange === 'number') entry.priceChangePercent = p.pricePercentageChange;\n      cleaned.push(entry);\n    });\n    continue;\n  }\n\n  // --- FoodPrices.ng: { data: [...], stats, pagination, scope, filters } ---\n  if (Array.isArray(j.data)) {\n    j.data.forEach((p) => {\n      const entry = {\n        source: 'FoodPrices',\n        commodity: p.brand_name || p.name || p.product,\n        market: p.market,\n        price: p.price !== undefined ? p.price : p.current_price,\n        unit: p.quantity || p.unit,\n        priceType: 'retail',\n        currency: 'NGN',\n        updatedAt: p.last_updated || new Date().toISOString(),\n      };\n      if (p.state) entry.state = p.state;\n      const region = normalizeRegion(p.region) || normalizeRegion(inferRegion(p.market, p.state));\n      if (region) entry.region = region;\n      const trend = trendFromChange(p.change_percent);\n      if (trend) entry.trend = trend;\n      if (typeof p.change_percent === 'number') entry.priceChangePercent = p.change_percent;\n      if (p.url) entry.url = p.url;\n      cleaned.push(entry);\n    });\n    continue;\n  }\n\n  // --- PriceNija: each n8n item IS a single flattened record (not wrapped in an array) ---\n  // commodity/market use asName()/asObject() so this is resilient even if\n  // either field arrives as a JSON-string instead of a live nested object\n  // (a shape that has shown up in practice and would otherwise silently\n  // produce blank commodity/market/state/region fields).\n  if (j.commodity_id !== undefined || j.market_id !== undefined || (j.commodity && j.market)) {\n    const p = j;\n    const commodityObj = asObject(p.commodity);\n    const marketObj = asObject(p.market);\n\n    const entry = {\n      source: 'PriceNija',\n      commodity: asName(p.commodity),\n      market: asName(p.market),\n      price: p.price,\n      unit: 'bag',\n      priceType: p.price_type || 'wholesale',\n      currency: 'NGN',\n      updatedAt: p.updated_at || p.created_at || new Date().toISOString(),\n    };\n    const marketState = marketObj?.state;\n    if (marketState) entry.state = marketState;\n    const region = normalizeRegion(marketObj?.region);\n    if (region) entry.region = region;\n    if (marketObj?.lat) entry.lat = marketObj.lat;\n    if (marketObj?.lng) entry.lng = marketObj.lng;\n    if (p.date) entry.date = p.date;\n    const commodityCategory = commodityObj?.category;\n    if (commodityCategory) entry.category = commodityCategory;\n    cleaned.push(entry);\n    continue;\n  }\n\n  // --- Anything that doesn't match a known shape: keep it visible instead of silently dropping it ---\n  unrecognized.push(j);\n}\n\n// ==========================================================\n// PART 2 — TONNAGE ENRICHMENT (runs across the whole cleaned\n// batch at once, since cross-row lookup and price-ratio\n// estimation both need to see every record, not just one at a\n// time)\n// ==========================================================\n\nenrichWithTonnage(cleaned);\n\nconst output = cleaned.map((entry) => ({ json: entry }));\n\nif (unrecognized.length) {\n  output.push({\n    json: {\n      source: 'Unrecognized',\n      count: unrecognized.length,\n      note: 'Items that did not match any known source shape - inspect and extend the classifier above.',\n      samples: unrecognized.slice(0, 3),\n    },\n  });\n}\n\noutput.sort((a, b) =>\n  (a.json.source || '').localeCompare(b.json.source || '') ||\n  (a.json.commodity || '').localeCompare(b.json.commodity || '')\n);\n\nreturn output;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        256
+      ],
+      "id": "1ba08dac-d6b9-4dc8-8742-353fad69af8d",
+      "name": "Sanitizing node",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        1632,
+        272
+      ],
+      "id": "116eac7b-4221-48b9-999b-a16e597be3be",
+      "name": "Merge"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        752
+      ],
+      "id": "e0a80cee-e658-4e79-9783-7cc26463ff51",
+      "name": "No Operation, do nothing1"
+    },
+    {
+      "parameters": {
+        "content": "# REAL TIME DATA",
+        "height": 80,
+        "width": 4544
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        -544
+      ],
+      "id": "a846550e-1aee-441e-865c-026bdb7cff5e",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564",
+          "mode": "list",
+          "cachedResultName": "Dynamic_Agronomic",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Commodity List",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "commodity",
+              "displayName": "commodity",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "market",
+              "displayName": "market",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price",
+              "displayName": "price",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "unit",
+              "displayName": "unit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priceType",
+              "displayName": "priceType",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "currency",
+              "displayName": "currency",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "updatedAt",
+              "displayName": "updatedAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "state",
+              "displayName": "state",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "region",
+              "displayName": "region",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "trend",
+              "displayName": "trend",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priceChangePercent",
+              "displayName": "priceChangePercent",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "kg_per_unit_resolved",
+              "displayName": "kg_per_unit_resolved",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "kg_per_unit_source",
+              "displayName": "kg_per_unit_source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price_per_5_tonnes",
+              "displayName": "price_per_5_tonnes",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "tonnage_convertible",
+              "displayName": "tonnage_convertible",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "price_ratio_anchor_scope",
+              "displayName": "price_ratio_anchor_scope",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "kgPerUnit",
+              "displayName": "kgPerUnit",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "signal",
+              "displayName": "signal",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1088,
+        32
+      ],
+      "id": "57e93bfa-8e0e-407d-a6fd-a2252e37f179",
+      "name": "Append Commodity List",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CVk7yQMP6tYVIzmM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2560,
+        -16
+      ],
+      "id": "14ee7bb2-6a31-43c7-b5d5-d66237db406f",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Loop1",
+      "typeVersion": 1,
+      "position": [
+        2736,
+        96
+      ],
+      "id": "e69003fb-c84d-487c-af3e-ffa63505bf27",
+      "placeholder": true
+    },
+    {
+      "parameters": {
+        "pageId": {
+          "__rl": true,
+          "value": "https://app.notion.com/p/Master-Ledger-3ae760b827bf80e88248fdb2a62c2413?source=copy_link",
+          "mode": "url"
+        },
+        "title": "Master Ledger",
+        "contentType": "markdown",
+        "markdown": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.notion",
+      "typeVersion": 3,
+      "position": [
+        3440,
+        -32
+      ],
+      "id": "f8f2b435-e25e-4449-b01b-35bc5651d672",
+      "name": "Master Ledger3",
+      "credentials": {
+        "notionApi": {
+          "id": "9MzyzUGXRpU2vX2d",
+          "name": "Notion account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-5-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2960,
+        176
+      ],
+      "id": "676c26cf-6971-4c38-8a6d-60c85669bd29",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "8bR8C4Lf1eeH0K1b",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Generate a logistics dispatch manifest from the following arbitrage opportunity.\n\n{{ JSON.stringify($json, null, 2) }}",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "=You are an Agricultural Supply Chain and Logistics Intelligence Agent.\n\nYour role is to analyze profitable commodity arbitrage opportunities generated by the Market Arbitrage Engine and produce a professional logistics dispatch manifest.\n\nYour objectives are:\n\n1. Verify that the opportunity is profitable.\n2. Summarize the buying market and selling market.\n3. Explain why the route is profitable.\n4. Highlight the expected spread, logistics cost and estimated net profit.\n5. Recommend the most suitable shipment.\n6. Mention operational considerations such as road distance, fuel cost impact and market timing where relevant.\n7. Produce a concise but professional report suitable for logistics managers.\n\nNever invent prices or markets.\n\nOnly use the values supplied in the input.\n\nIf profit is zero or negative, state that the shipment should not be executed.\n\nKeep responses factual, concise and decision-oriented.\n\nOutput must always be valid Markdown."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        2960,
+        -32
+      ],
+      "id": "96af797e-2f9b-416f-a1f6-478e942d8d03",
+      "name": "Agricultural Supply Chain and Logistics Intelligence Agent1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "8ba7baa6-eb7b-40d4-95c1-b26dab3d18d3",
+              "leftValue": "={{ $json.is_profitable }}",
+              "rightValue": false,
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2144,
+        272
+      ],
+      "id": "1813e030-6787-4fc1-a181-25315898a9a7",
+      "name": "Routes Profitable & None Profitable1"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564",
+          "mode": "list",
+          "cachedResultName": "Dynamic_Agronomic",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 128714501,
+          "mode": "list",
+          "cachedResultName": "Sheet6",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit#gid=128714501"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1088,
+        368
+      ],
+      "id": "e8abb4aa-1b23-4197-bb75-cecb325c1ba7",
+      "name": "Append Commodity False List",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CVk7yQMP6tYVIzmM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        192,
+        1760
+      ],
+      "id": "9513ff2d-4665-4725-a157-b8f8eedbf9eb",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ==========================================================\n// DYNAMIC AGRONOMIC SUPPLY CHAIN & MARKET ARBITRAGE ROUTER\n// ARBITRAGE CALCULATION — market data + logistics/route data\n//\n// n8n Code Node — JavaScript, \"Run Once for All Items\" mode\n//\n// This version reads a SINGLE merged input stream (Input 0),\n// e.g. the output of an upstream Merge node that has already\n// combined your market-price rows and your logistics/route\n// rows into one array. It auto-sorts each row into either the\n// market pile or the route pile by inspecting its fields, so\n// you don't need a second Code-node input branch wired up.\n//\n// MARKET ROW shape, e.g.:\n//   {\n//     \"source\": \"FoodPrices\",\n//     \"commodity\": \"Beans (Drum)\",\n//     \"market\": \"Agbalata Market\",\n//     \"price\": 1000,\n//     \"unit\": \"1 Derica\",\n//     \"priceType\": \"retail\",\n//     \"currency\": \"NGN\",\n//     \"updatedAt\": \"2026-07-17T01:00:00+01:00\",\n//     \"state\": \"Lagos\",\n//     \"region\": \"South-West\",\n//     ... (optional: trend, priceChangePercent, category, signal, kgPerUnit, date)\n//   }\n//\n// ROUTE ROW shape, e.g. (column names are matched case-\n// insensitively, with a couple of common aliases):\n//   {\n//     \"Origin\": \"Ajah Market\",\n//     \"Destination\": \"Lekki-Jakande Market\",\n//     \"Est Dist (km)\": 8,\n//     \"Transit Hours\": 0.1,\n//     \"Fuel (L)\": 2.9,\n//     \"Fuel Cost\": 4698,\n//     \"Truck Cost\": 256400,\n//     \"Levy\": 75000,\n//     \"Logistics Cost\": 336098\n//   }\n//\n// A row is treated as a ROUTE row if it has origin+destination\n// fields, and as a MARKET row if it has commodity+market fields.\n// Anything matching neither is skipped.\n// ==========================================================\n\n// ==========================================================\n// LOAD + SPLIT INPUT\n// ==========================================================\n\nconst allItems = $input.all();\n\nif (!allItems || allItems.length === 0) {\n  throw new Error(\"No data received.\");\n}\n\n// Case-insensitive field getter: checks each candidate key against\n// every key actually present on the row, ignoring case/whitespace.\nfunction getField(row, candidates) {\n  const rowKeys = Object.keys(row);\n  for (const candidate of candidates) {\n    const normalizedCandidate = candidate.toLowerCase().replace(/[\\s_]/g, \"\");\n    for (const key of rowKeys) {\n      const normalizedKey = key.toLowerCase().replace(/[\\s_]/g, \"\");\n      if (normalizedKey === normalizedCandidate) {\n        return row[key];\n      }\n    }\n  }\n  return undefined;\n}\n\nconst marketItems = [];\nconst routeItems = [];\n\nfor (const item of allItems) {\n  const row = item.json || item;\n\n  const isRouteRow =\n    getField(row, [\"Origin\", \"from\"]) !== undefined &&\n    getField(row, [\"Destination\", \"to\"]) !== undefined;\n\n  const isMarketRow =\n    getField(row, [\"commodity\"]) !== undefined && getField(row, [\"market\"]) !== undefined;\n\n  if (isRouteRow) {\n    routeItems.push(row);\n  } else if (isMarketRow) {\n    marketItems.push(row);\n  }\n  // rows matching neither shape are silently skipped\n}\n\nif (marketItems.length === 0) {\n  throw new Error(\"No market data rows found in the input (no rows with commodity + market fields).\");\n}\n\n// ==========================================================\n// HELPERS\n// ==========================================================\n\nfunction safeFloat(value) {\n  if (value === null || value === undefined) return null;\n  try {\n    const text = String(value).replace(/,/g, \"\").replace(/₦/g, \"\").trim();\n    if (text === \"\") return null;\n    const num = Number(text);\n    return Number.isNaN(num) ? null : num;\n  } catch (e) {\n    return null;\n  }\n}\n\nfunction clean(value) {\n  return value === null || value === undefined ? \"\" : String(value).trim();\n}\n\nfunction confidence(count) {\n  if (count >= 4) return \"Very High\";\n  if (count === 3) return \"High\";\n  if (count === 2) return \"Medium\";\n  return \"Low\";\n}\n\nfunction latestTimestamp(values) {\n  const timestamps = values.filter((v) => v);\n  if (timestamps.length === 0) return null;\n  return timestamps.reduce((a, b) => (a > b ? a : b));\n}\n\nfunction mean(values) {\n  return values.reduce((a, b) => a + b, 0) / values.length;\n}\n\nfunction round2(value) {\n  return Math.round((value + Number.EPSILON) * 100) / 100;\n}\n\n// Yield all 2-item combinations of an array (mirrors Python's itertools.combinations)\nfunction* combinations2(arr) {\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = i + 1; j < arr.length; j++) {\n      yield [arr[i], arr[j]];\n    }\n  }\n}\n\n// ==========================================================\n// LOGISTICS LOOKUP\n//\n// Built from the route rows split out above. Real-world market\n// names are rarely spelled identically across two data sources\n// (\"Mile 12 Market\" vs \"Mile 12\" vs \"Lagos (Mile 12)\"), so this\n// does two passes when looking up a cost:\n//   1. EXACT match on the raw market name.\n//   2. NORMALIZED match: strip the word \"Market\", lowercase,\n//      collapse whitespace, and also try whatever's inside\n//      parentheses as an alternate name (e.g. \"Lagos (Mile 12)\"\n//      also registers as just \"mile 12\").\n// If neither matches, logistics_cost falls back to 0, same as\n// before — this just meaningfully shrinks how often that happens.\n// ==========================================================\n\n// Produces every normalized name variant for a market string.\nfunction nameVariants(rawName) {\n  const variants = new Set();\n  const s = clean(rawName);\n  if (!s) return variants;\n\n  const stripMarketWord = (str) =>\n    str.replace(/\\bmarket\\b/gi, \"\").replace(/\\s+/g, \" \").trim().toLowerCase();\n\n  // Full name, with/without the word \"Market\"\n  variants.add(s.toLowerCase());\n  variants.add(stripMarketWord(s));\n\n  // If there's a parenthetical, e.g. \"Lagos (Mile 12)\", register\n  // both the inner content and the outer name (parens stripped)\n  const parenMatch = s.match(/\\(([^)]+)\\)/);\n  if (parenMatch) {\n    variants.add(stripMarketWord(parenMatch[1]));\n    const outer = s.replace(/\\([^)]*\\)/, \"\").replace(/\\s+/g, \" \").trim();\n    if (outer) variants.add(stripMarketWord(outer));\n  }\n\n  variants.delete(\"\");\n  return variants;\n}\n\nconst routeLookupExact = new Map();\nconst routeLookupFuzzy = new Map();\n\nfor (const row of routeItems) {\n  const originRaw = clean(getField(row, [\"Origin\", \"from\"]));\n  const destinationRaw = clean(getField(row, [\"Destination\", \"to\"]));\n  const cost = safeFloat(\n    getField(row, [\n      \"Total Logistics Cost\",\n      \"Logistics Cost\",\n      \"logistics_cost\",\n      \"total_logistics_cost\",\n      \"cost\",\n      \"total_cost\",\n    ])\n  );\n\n  if (!originRaw || !destinationRaw || cost === null) continue;\n\n  routeLookupExact.set(`${originRaw}|||${destinationRaw}`, cost);\n\n  const originVariants = nameVariants(originRaw);\n  const destinationVariants = nameVariants(destinationRaw);\n  for (const ov of originVariants) {\n    for (const dv of destinationVariants) {\n      // Don't overwrite an existing fuzzy entry — first match wins,\n      // avoiding ambiguous overwrites if two different routes\n      // happen to normalize to the same pair.\n      const fuzzyKey = `${ov}|||${dv}`;\n      if (!routeLookupFuzzy.has(fuzzyKey)) {\n        routeLookupFuzzy.set(fuzzyKey, cost);\n      }\n    }\n  }\n}\n\n// Looks up logistics cost for a buy/sell market pair. Returns\n// { cost, matchType } where matchType is \"exact\", \"fuzzy\", or \"none\".\nfunction lookupLogisticsCost(buyMarket, sellMarket) {\n  const exactKey = `${clean(buyMarket)}|||${clean(sellMarket)}`;\n  if (routeLookupExact.has(exactKey)) {\n    return { cost: routeLookupExact.get(exactKey), matchType: \"exact\" };\n  }\n\n  const buyVariants = nameVariants(buyMarket);\n  const sellVariants = nameVariants(sellMarket);\n  for (const bv of buyVariants) {\n    for (const sv of sellVariants) {\n      const fuzzyKey = `${bv}|||${sv}`;\n      if (routeLookupFuzzy.has(fuzzyKey)) {\n        return { cost: routeLookupFuzzy.get(fuzzyKey), matchType: \"fuzzy\" };\n      }\n    }\n  }\n\n  return { cost: 0, matchType: \"none\" };\n}\n\nconsole.log(\n  \"Route Rows Parsed:\",\n  routeLookupExact.size,\n  \"of\",\n  routeItems.length,\n  \"route rows found\"\n);\n\n// ==========================================================\n// STEP 1 — BUILD MARKET CONSENSUS\n//\n// The same commodity+market+unit can appear multiple times\n// (different sources, different pull times). Merge these into\n// one consensus record per (commodity, market, unit).\n// ==========================================================\n\nconst marketGroups = new Map();\n\nfor (const row of marketItems) {\n  const commodity = clean(row.commodity);\n  const market = clean(row.market);\n  const unit = clean(row.unit);\n\n  if (commodity === \"\" || market === \"\") continue;\n\n  const key = `${commodity.toLowerCase()}|||${market.toLowerCase()}|||${unit.toLowerCase()}`;\n  if (!marketGroups.has(key)) marketGroups.set(key, []);\n  marketGroups.get(key).push(row);\n}\n\nconst consensusRecords = [];\n\nfor (const [key, records] of marketGroups.entries()) {\n  const prices = [];\n  const timestamps = [];\n  const sources = [];\n\n  for (const record of records) {\n    const price = safeFloat(record.price);\n    if (price !== null) prices.push(price);\n    if (record.updatedAt) timestamps.push(record.updatedAt);\n    if (record.source) sources.push(record.source);\n  }\n\n  if (prices.length === 0) continue;\n\n  const sample = records[0];\n\n  consensusRecords.push({\n    commodity: sample.commodity,\n    market: sample.market,\n    unit: sample.unit,\n    state: sample.state,\n    region: sample.region,\n    category: sample.category,\n    kg_per_unit: sample.kgPerUnit,\n    average_price: round2(mean(prices)),\n    minimum_price: Math.min(...prices),\n    maximum_price: Math.max(...prices),\n    source_count: records.length,\n    sources: [...new Set(sources)].sort(),\n    confidence: confidence(records.length),\n    updatedAt: latestTimestamp(timestamps),\n  });\n}\n\nconsole.log(\"Consensus Markets:\", consensusRecords.length);\n\n// ==========================================================\n// STEP 2 — GENERATE ARBITRAGE OPPORTUNITIES\n//\n// Compare every market against every other market that sells\n// the SAME commodity in the SAME unit, and flag price gaps.\n// ==========================================================\n\nconst commodityGroups = new Map();\n\nfor (const record of consensusRecords) {\n  const key = `${clean(record.commodity).toLowerCase()}|||${clean(record.unit).toLowerCase()}`;\n  if (!commodityGroups.has(key)) commodityGroups.set(key, []);\n  commodityGroups.get(key).push(record);\n}\n\nconsole.log(\"Commodity Groups:\", commodityGroups.size);\n\nconst opportunities = [];\n\nfor (const markets of commodityGroups.values()) {\n  if (markets.length < 2) continue;\n\n  for (const [left, right] of combinations2(markets)) {\n    const leftPrice = safeFloat(left.average_price);\n    const rightPrice = safeFloat(right.average_price);\n\n    if (leftPrice === null || rightPrice === null || leftPrice === rightPrice) continue;\n\n    const [buy, sell] = leftPrice < rightPrice ? [left, right] : [right, left];\n\n    const buyPrice = safeFloat(buy.average_price);\n    const sellPrice = safeFloat(sell.average_price);\n\n    const spread = sellPrice - buyPrice;\n    const { cost: logisticsCost, matchType: logisticsMatch } = lookupLogisticsCost(\n      buy.market,\n      sell.market\n    );\n    const netProfit = spread - logisticsCost;\n    const marginPercent = buyPrice > 0 ? round2((netProfit / buyPrice) * 100) : 0;\n\n    opportunities.push({\n      commodity: buy.commodity,\n      unit: buy.unit,\n      category: buy.category,\n\n      buy_market: buy.market,\n      buy_state: buy.state,\n      buy_region: buy.region,\n      buy_price: buyPrice,\n      buy_sources: buy.source_count,\n      buy_confidence: buy.confidence,\n      buy_updated: buy.updatedAt,\n\n      sell_market: sell.market,\n      sell_state: sell.state,\n      sell_region: sell.region,\n      sell_price: sellPrice,\n      sell_sources: sell.source_count,\n      sell_confidence: sell.confidence,\n      sell_updated: sell.updatedAt,\n\n      spread: round2(spread),\n      logistics_cost: round2(logisticsCost),\n      logistics_match: logisticsMatch,\n      net_profit: round2(netProfit),\n      margin_percent: marginPercent,\n      profit_loss_percent: marginPercent,\n      profit_loss_label:\n        marginPercent >= 0\n          ? `${Math.abs(marginPercent)}% profit`\n          : `${Math.abs(marginPercent)}% loss`,\n\n      route: `${buy.market} → ${sell.market}`,\n    });\n  }\n}\n\nconst rawOpportunitiesCount = opportunities.length;\nconsole.log(\"Raw Opportunities:\", rawOpportunitiesCount);\n\n// ==========================================================\n// STEP 2B — DROP UNVERIFIED OPPORTUNITIES\n//\n// An opportunity with no matching logistics-cost row (exact or\n// fuzzy) has an unknown transport cost, not a zero one. Rather\n// than silently defaulting to 0 and calling it \"profitable\",\n// we drop these entirely — only routes backed by real logistics\n// data make it into scoring/ranking below.\n// ==========================================================\n\nconst unverifiedCount = opportunities.filter((r) => r.logistics_match === \"none\").length;\nconst verifiedOpportunities = opportunities.filter((r) => r.logistics_match !== \"none\");\n\nconsole.log(\n  \"Dropped (no logistics data):\",\n  unverifiedCount,\n  \"| Verified (kept):\",\n  verifiedOpportunities.length\n);\n\nopportunities.length = 0;\nopportunities.push(...verifiedOpportunities);\n\n// ==========================================================\n// STEP 3 — SCORE, RATE AND RANK\n// ==========================================================\n\nconst confPoints = { \"Very High\": 20, High: 15, Medium: 10, Low: 0 };\n\nconst profitableRoutes = [];\nconst unprofitableRoutes = [];\n\nfor (const route of opportunities) {\n  const profit = route.net_profit;\n  const margin = route.margin_percent;\n\n  route.is_profitable = profit > 0;\n\n  let score = 0;\n  if (profit > 0) score += 40;\n  if (margin >= 5) score += 20;\n  score += confPoints[route.buy_confidence] || 0;\n  score += confPoints[route.sell_confidence] || 0;\n  route.score = score;\n\n  if (score >= 90) route.rating = \"Excellent\";\n  else if (score >= 75) route.rating = \"Very Good\";\n  else if (score >= 60) route.rating = \"Good\";\n  else if (score >= 40) route.rating = \"Fair\";\n  else route.rating = \"Poor\";\n\n  if (profit >= 500) route.profit_category = \"Very High\";\n  else if (profit >= 200) route.profit_category = \"High\";\n  else if (profit >= 50) route.profit_category = \"Medium\";\n  else if (profit > 0) route.profit_category = \"Low\";\n  else route.profit_category = \"Loss\";\n\n  (route.is_profitable ? profitableRoutes : unprofitableRoutes).push(route);\n}\n\nprofitableRoutes.sort((a, b) => {\n  if (b.net_profit !== a.net_profit) return b.net_profit - a.net_profit;\n  if (b.margin_percent !== a.margin_percent) return b.margin_percent - a.margin_percent;\n  return b.score - a.score;\n});\n\nunprofitableRoutes.sort((a, b) => {\n  if (b.net_profit !== a.net_profit) return b.net_profit - a.net_profit;\n  return b.margin_percent - a.margin_percent;\n});\n\nconsole.log(\"Profitable Routes:\", profitableRoutes.length);\nconsole.log(\"Rejected Routes:\", unprofitableRoutes.length);\n\n// ==========================================================\n// STEP 4 — BUILD FINAL n8n OUTPUT\n// ==========================================================\n\nconst logisticsMatchCounts = { exact: 0, fuzzy: 0, none: 0 };\nfor (const route of opportunities) {\n  logisticsMatchCounts[route.logistics_match] += 1;\n}\n\nconst summary = {\n  total_market_records: marketItems.length,\n  consensus_markets: consensusRecords.length,\n  commodity_groups: commodityGroups.size,\n  opportunities_checked: rawOpportunitiesCount,\n  opportunities_dropped_no_logistics_data: unverifiedCount,\n  opportunities_verified: verifiedOpportunities.length,\n  profitable_routes: profitableRoutes.length,\n  rejected_routes: unprofitableRoutes.length,\n  logistics_data_available: routeLookupExact.size > 0,\n  logistics_matches_exact: logisticsMatchCounts.exact,\n  logistics_matches_fuzzy: logisticsMatchCounts.fuzzy,\n};\n\nconsole.log(summary);\n\n// Include BOTH profitable and unprofitable verified routes in the item-level\n// output (profitable first), so every route's percentage profit/loss is\n// visible downstream — not just the winners. Use is_profitable to filter\n// in the Switch node.\nconst output = [];\nlet rank = 1;\n\nfor (const route of [...profitableRoutes, ...unprofitableRoutes]) {\n  output.push({ json: { rank, ...route } });\n  rank += 1;\n}\n\nif (output.length === 0) {\n  output.push({\n    json: {\n      message:\n        unverifiedCount > 0\n          ? \"No profitable arbitrage opportunity found among routes with real logistics cost data. \" +\n            `${unverifiedCount} additional opportunities exist but were dropped because no logistics cost data ` +\n            \"was available for those market pairs — add route coverage for those markets to check them.\"\n          : \"No profitable arbitrage opportunity found.\",\n      markets_checked: consensusRecords.length,\n      opportunities_checked: rawOpportunitiesCount,\n      summary,\n    },\n  });\n} else {\n  output[0].json.summary = summary;\n}\n\nreturn output;\n"
+      },
+      "id": "6ec5e558-8a57-4356-84a7-8e282a375f5a",
+      "name": "Arbitrage Calculator",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        272
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// ==========================================================\n// DYNAMIC AGRONOMIC SUPPLY CHAIN & MARKET ARBITRAGE ROUTER\n// ARBITRAGE CALCULATION — market data + logistics/route data\n//\n// n8n Code Node — JavaScript, \"Run Once for All Items\" mode\n//\n// This version reads a SINGLE merged input stream (Input 0),\n// e.g. the output of an upstream Merge node that has already\n// combined your market-price rows and your logistics/route\n// rows into one array. It auto-sorts each row into either the\n// market pile or the route pile by inspecting its fields, so\n// you don't need a second Code-node input branch wired up.\n//\n// MARKET ROW shape, e.g.:\n//   {\n//     \"source\": \"FoodPrices\",\n//     \"commodity\": \"Beans (Drum)\",\n//     \"market\": \"Agbalata Market\",\n//     \"price\": 1000,\n//     \"unit\": \"1 Derica\",\n//     \"priceType\": \"retail\",\n//     \"currency\": \"NGN\",\n//     \"updatedAt\": \"2026-07-17T01:00:00+01:00\",\n//     \"state\": \"Lagos\",\n//     \"region\": \"South-West\",\n//     ... (optional: trend, priceChangePercent, category, signal, kgPerUnit, date)\n//   }\n//\n// ROUTE ROW shape, e.g. (column names are matched case-\n// insensitively, with a couple of common aliases):\n//   {\n//     \"Origin\": \"Ajah Market\",\n//     \"Destination\": \"Lekki-Jakande Market\",\n//     \"Est Dist (km)\": 8,\n//     \"Transit Hours\": 0.1,\n//     \"Fuel (L)\": 2.9,\n//     \"Fuel Cost\": 4698,\n//     \"Truck Cost\": 256400,\n//     \"Levy\": 75000,\n//     \"Logistics Cost\": 336098\n//   }\n//\n// A row is treated as a ROUTE row if it has origin+destination\n// fields, and as a MARKET row if it has commodity+market fields.\n// Anything matching neither is skipped.\n// ==========================================================\n\n// ==========================================================\n// LOAD + SPLIT INPUT\n// ==========================================================\n\nconst allItems = $input.all();\n\nif (!allItems || allItems.length === 0) {\n  throw new Error(\"No data received.\");\n}\n\n// Case-insensitive field getter: checks each candidate key against\n// every key actually present on the row, ignoring case/whitespace.\nfunction getField(row, candidates) {\n  const rowKeys = Object.keys(row);\n  for (const candidate of candidates) {\n    const normalizedCandidate = candidate.toLowerCase().replace(/[\\s_]/g, \"\");\n    for (const key of rowKeys) {\n      const normalizedKey = key.toLowerCase().replace(/[\\s_]/g, \"\");\n      if (normalizedKey === normalizedCandidate) {\n        return row[key];\n      }\n    }\n  }\n  return undefined;\n}\n\nconst marketItems = [];\nconst routeItems = [];\n\nfor (const item of allItems) {\n  const row = item.json || item;\n\n  const isRouteRow =\n    getField(row, [\"Origin\", \"from\"]) !== undefined &&\n    getField(row, [\"Destination\", \"to\"]) !== undefined;\n\n  const isMarketRow =\n    getField(row, [\"commodity\"]) !== undefined && getField(row, [\"market\"]) !== undefined;\n\n  if (isRouteRow) {\n    routeItems.push(row);\n  } else if (isMarketRow) {\n    marketItems.push(row);\n  }\n  // rows matching neither shape are silently skipped\n}\n\nif (marketItems.length === 0) {\n  throw new Error(\"No market data rows found in the input (no rows with commodity + market fields).\");\n}\n\n// ==========================================================\n// HELPERS\n// ==========================================================\n\nfunction safeFloat(value) {\n  if (value === null || value === undefined) return null;\n  try {\n    const text = String(value).replace(/,/g, \"\").replace(/₦/g, \"\").trim();\n    if (text === \"\") return null;\n    const num = Number(text);\n    return Number.isNaN(num) ? null : num;\n  } catch (e) {\n    return null;\n  }\n}\n\nfunction clean(value) {\n  return value === null || value === undefined ? \"\" : String(value).trim();\n}\n\nfunction confidence(count) {\n  if (count >= 4) return \"Very High\";\n  if (count === 3) return \"High\";\n  if (count === 2) return \"Medium\";\n  return \"Low\";\n}\n\nfunction latestTimestamp(values) {\n  const timestamps = values.filter((v) => v);\n  if (timestamps.length === 0) return null;\n  return timestamps.reduce((a, b) => (a > b ? a : b));\n}\n\nfunction mean(values) {\n  return values.reduce((a, b) => a + b, 0) / values.length;\n}\n\nfunction round2(value) {\n  return Math.round((value + Number.EPSILON) * 100) / 100;\n}\n\n// Yield all 2-item combinations of an array (mirrors Python's itertools.combinations)\nfunction* combinations2(arr) {\n  for (let i = 0; i < arr.length; i++) {\n    for (let j = i + 1; j < arr.length; j++) {\n      yield [arr[i], arr[j]];\n    }\n  }\n}\n\n// ==========================================================\n// LOGISTICS LOOKUP\n//\n// Built from the route rows split out above. Real-world market\n// names are rarely spelled identically across two data sources\n// (\"Mile 12 Market\" vs \"Mile 12\" vs \"Lagos (Mile 12)\"), so this\n// does two passes when looking up a cost:\n//   1. EXACT match on the raw market name.\n//   2. NORMALIZED match: strip the word \"Market\", lowercase,\n//      collapse whitespace, and also try whatever's inside\n//      parentheses as an alternate name (e.g. \"Lagos (Mile 12)\"\n//      also registers as just \"mile 12\").\n// If neither matches, logistics_cost falls back to 0, same as\n// before — this just meaningfully shrinks how often that happens.\n// ==========================================================\n\n// Produces every normalized name variant for a market string.\nfunction nameVariants(rawName) {\n  const variants = new Set();\n  const s = clean(rawName);\n  if (!s) return variants;\n\n  const stripMarketWord = (str) =>\n    str.replace(/\\bmarket\\b/gi, \"\").replace(/\\s+/g, \" \").trim().toLowerCase();\n\n  // Full name, with/without the word \"Market\"\n  variants.add(s.toLowerCase());\n  variants.add(stripMarketWord(s));\n\n  // If there's a parenthetical, e.g. \"Lagos (Mile 12)\", register\n  // both the inner content and the outer name (parens stripped)\n  const parenMatch = s.match(/\\(([^)]+)\\)/);\n  if (parenMatch) {\n    variants.add(stripMarketWord(parenMatch[1]));\n    const outer = s.replace(/\\([^)]*\\)/, \"\").replace(/\\s+/g, \" \").trim();\n    if (outer) variants.add(stripMarketWord(outer));\n  }\n\n  variants.delete(\"\");\n  return variants;\n}\n\nconst routeLookupExact = new Map();\nconst routeLookupFuzzy = new Map();\n\nfor (const row of routeItems) {\n  const originRaw = clean(getField(row, [\"Origin\", \"from\"]));\n  const destinationRaw = clean(getField(row, [\"Destination\", \"to\"]));\n  const cost = safeFloat(\n    getField(row, [\n      \"Total Logistics Cost\",\n      \"Logistics Cost\",\n      \"logistics_cost\",\n      \"total_logistics_cost\",\n      \"cost\",\n      \"total_cost\",\n    ])\n  );\n\n  if (!originRaw || !destinationRaw || cost === null) continue;\n\n  routeLookupExact.set(`${originRaw}|||${destinationRaw}`, cost);\n\n  const originVariants = nameVariants(originRaw);\n  const destinationVariants = nameVariants(destinationRaw);\n  for (const ov of originVariants) {\n    for (const dv of destinationVariants) {\n      // Don't overwrite an existing fuzzy entry — first match wins,\n      // avoiding ambiguous overwrites if two different routes\n      // happen to normalize to the same pair.\n      const fuzzyKey = `${ov}|||${dv}`;\n      if (!routeLookupFuzzy.has(fuzzyKey)) {\n        routeLookupFuzzy.set(fuzzyKey, cost);\n      }\n    }\n  }\n}\n\n// Looks up logistics cost for a buy/sell market pair. Returns\n// { cost, matchType } where matchType is \"exact\", \"fuzzy\", or \"none\".\nfunction lookupLogisticsCost(buyMarket, sellMarket) {\n  const exactKey = `${clean(buyMarket)}|||${clean(sellMarket)}`;\n  if (routeLookupExact.has(exactKey)) {\n    return { cost: routeLookupExact.get(exactKey), matchType: \"exact\" };\n  }\n\n  const buyVariants = nameVariants(buyMarket);\n  const sellVariants = nameVariants(sellMarket);\n  for (const bv of buyVariants) {\n    for (const sv of sellVariants) {\n      const fuzzyKey = `${bv}|||${sv}`;\n      if (routeLookupFuzzy.has(fuzzyKey)) {\n        return { cost: routeLookupFuzzy.get(fuzzyKey), matchType: \"fuzzy\" };\n      }\n    }\n  }\n\n  return { cost: 0, matchType: \"none\" };\n}\n\nconsole.log(\n  \"Route Rows Parsed:\",\n  routeLookupExact.size,\n  \"of\",\n  routeItems.length,\n  \"route rows found\"\n);\n\n// ==========================================================\n// STEP 1 — BUILD MARKET CONSENSUS\n//\n// The same commodity+market+unit can appear multiple times\n// (different sources, different pull times). Merge these into\n// one consensus record per (commodity, market, unit).\n// ==========================================================\n\nconst marketGroups = new Map();\n\nfor (const row of marketItems) {\n  const commodity = clean(row.commodity);\n  const market = clean(row.market);\n  const unit = clean(row.unit);\n\n  if (commodity === \"\" || market === \"\") continue;\n\n  const key = `${commodity.toLowerCase()}|||${market.toLowerCase()}|||${unit.toLowerCase()}`;\n  if (!marketGroups.has(key)) marketGroups.set(key, []);\n  marketGroups.get(key).push(row);\n}\n\nconst consensusRecords = [];\n\nfor (const [key, records] of marketGroups.entries()) {\n  const prices = [];\n  const timestamps = [];\n  const sources = [];\n\n  for (const record of records) {\n    const price = safeFloat(record.price);\n    if (price !== null) prices.push(price);\n    if (record.updatedAt) timestamps.push(record.updatedAt);\n    if (record.source) sources.push(record.source);\n  }\n\n  if (prices.length === 0) continue;\n\n  const sample = records[0];\n\n  consensusRecords.push({\n    commodity: sample.commodity,\n    market: sample.market,\n    unit: sample.unit,\n    state: sample.state,\n    region: sample.region,\n    category: sample.category,\n    kg_per_unit: sample.kgPerUnit,\n    average_price: round2(mean(prices)),\n    minimum_price: Math.min(...prices),\n    maximum_price: Math.max(...prices),\n    source_count: records.length,\n    sources: [...new Set(sources)].sort(),\n    confidence: confidence(records.length),\n    updatedAt: latestTimestamp(timestamps),\n  });\n}\n\nconsole.log(\"Consensus Markets:\", consensusRecords.length);\n\n// ==========================================================\n// STEP 2 — GENERATE ARBITRAGE OPPORTUNITIES\n//\n// Compare every market against every other market that sells\n// the SAME commodity in the SAME unit, and flag price gaps.\n// ==========================================================\n\nconst commodityGroups = new Map();\n\nfor (const record of consensusRecords) {\n  const key = `${clean(record.commodity).toLowerCase()}|||${clean(record.unit).toLowerCase()}`;\n  if (!commodityGroups.has(key)) commodityGroups.set(key, []);\n  commodityGroups.get(key).push(record);\n}\n\nconsole.log(\"Commodity Groups:\", commodityGroups.size);\n\nconst opportunities = [];\n\nfor (const markets of commodityGroups.values()) {\n  if (markets.length < 2) continue;\n\n  for (const [left, right] of combinations2(markets)) {\n    const leftPrice = safeFloat(left.average_price);\n    const rightPrice = safeFloat(right.average_price);\n\n    if (leftPrice === null || rightPrice === null || leftPrice === rightPrice) continue;\n\n    const [buy, sell] = leftPrice < rightPrice ? [left, right] : [right, left];\n\n    const buyPrice = safeFloat(buy.average_price);\n    const sellPrice = safeFloat(sell.average_price);\n\n    const spread = sellPrice - buyPrice;\n    const { cost: logisticsCost, matchType: logisticsMatch } = lookupLogisticsCost(\n      buy.market,\n      sell.market\n    );\n    const netProfit = spread - logisticsCost;\n    const marginPercent = buyPrice > 0 ? round2((netProfit / buyPrice) * 100) : 0;\n\n    opportunities.push({\n      commodity: buy.commodity,\n      unit: buy.unit,\n      category: buy.category,\n\n      buy_market: buy.market,\n      buy_state: buy.state,\n      buy_region: buy.region,\n      buy_price: buyPrice,\n      buy_sources: buy.source_count,\n      buy_confidence: buy.confidence,\n      buy_updated: buy.updatedAt,\n\n      sell_market: sell.market,\n      sell_state: sell.state,\n      sell_region: sell.region,\n      sell_price: sellPrice,\n      sell_sources: sell.source_count,\n      sell_confidence: sell.confidence,\n      sell_updated: sell.updatedAt,\n\n      spread: round2(spread),\n      logistics_cost: round2(logisticsCost),\n      logistics_match: logisticsMatch,\n      net_profit: round2(netProfit),\n      margin_percent: marginPercent,\n      profit_loss_percent: marginPercent,\n      profit_loss_label:\n        marginPercent >= 0\n          ? `${Math.abs(marginPercent)}% profit`\n          : `${Math.abs(marginPercent)}% loss`,\n\n      route: `${buy.market} → ${sell.market}`,\n    });\n  }\n}\n\nconst rawOpportunitiesCount = opportunities.length;\nconsole.log(\"Raw Opportunities:\", rawOpportunitiesCount);\n\n// ==========================================================\n// STEP 2B — DROP UNVERIFIED OPPORTUNITIES\n//\n// An opportunity with no matching logistics-cost row (exact or\n// fuzzy) has an unknown transport cost, not a zero one. Rather\n// than silently defaulting to 0 and calling it \"profitable\",\n// we drop these entirely — only routes backed by real logistics\n// data make it into scoring/ranking below.\n// ==========================================================\n\nconst unverifiedCount = opportunities.filter((r) => r.logistics_match === \"none\").length;\nconst verifiedOpportunities = opportunities.filter((r) => r.logistics_match !== \"none\");\n\nconsole.log(\n  \"Dropped (no logistics data):\",\n  unverifiedCount,\n  \"| Verified (kept):\",\n  verifiedOpportunities.length\n);\n\nopportunities.length = 0;\nopportunities.push(...verifiedOpportunities);\n\n// ==========================================================\n// STEP 3 — SCORE, RATE AND RANK\n// ==========================================================\n\nconst confPoints = { \"Very High\": 20, High: 15, Medium: 10, Low: 0 };\n\nconst profitableRoutes = [];\nconst unprofitableRoutes = [];\n\nfor (const route of opportunities) {\n  const profit = route.net_profit;\n  const margin = route.margin_percent;\n\n  route.is_profitable = profit > 0;\n\n  let score = 0;\n  if (profit > 0) score += 40;\n  if (margin >= 5) score += 20;\n  score += confPoints[route.buy_confidence] || 0;\n  score += confPoints[route.sell_confidence] || 0;\n  route.score = score;\n\n  if (score >= 90) route.rating = \"Excellent\";\n  else if (score >= 75) route.rating = \"Very Good\";\n  else if (score >= 60) route.rating = \"Good\";\n  else if (score >= 40) route.rating = \"Fair\";\n  else route.rating = \"Poor\";\n\n  if (profit >= 500) route.profit_category = \"Very High\";\n  else if (profit >= 200) route.profit_category = \"High\";\n  else if (profit >= 50) route.profit_category = \"Medium\";\n  else if (profit > 0) route.profit_category = \"Low\";\n  else route.profit_category = \"Loss\";\n\n  (route.is_profitable ? profitableRoutes : unprofitableRoutes).push(route);\n}\n\nprofitableRoutes.sort((a, b) => {\n  if (b.net_profit !== a.net_profit) return b.net_profit - a.net_profit;\n  if (b.margin_percent !== a.margin_percent) return b.margin_percent - a.margin_percent;\n  return b.score - a.score;\n});\n\nunprofitableRoutes.sort((a, b) => {\n  if (b.net_profit !== a.net_profit) return b.net_profit - a.net_profit;\n  return b.margin_percent - a.margin_percent;\n});\n\nconsole.log(\"Profitable Routes:\", profitableRoutes.length);\nconsole.log(\"Rejected Routes:\", unprofitableRoutes.length);\n\n// ==========================================================\n// STEP 4 — BUILD FINAL n8n OUTPUT\n// ==========================================================\n\nconst logisticsMatchCounts = { exact: 0, fuzzy: 0, none: 0 };\nfor (const route of opportunities) {\n  logisticsMatchCounts[route.logistics_match] += 1;\n}\n\nconst summary = {\n  total_market_records: marketItems.length,\n  consensus_markets: consensusRecords.length,\n  commodity_groups: commodityGroups.size,\n  opportunities_checked: rawOpportunitiesCount,\n  opportunities_dropped_no_logistics_data: unverifiedCount,\n  opportunities_verified: verifiedOpportunities.length,\n  profitable_routes: profitableRoutes.length,\n  rejected_routes: unprofitableRoutes.length,\n  logistics_data_available: routeLookupExact.size > 0,\n  logistics_matches_exact: logisticsMatchCounts.exact,\n  logistics_matches_fuzzy: logisticsMatchCounts.fuzzy,\n};\n\nconsole.log(summary);\n\n// Include BOTH profitable and unprofitable verified routes in the item-level\n// output (profitable first), so every route's percentage profit/loss is\n// visible downstream — not just the winners. Use is_profitable to filter\n// in the Switch node.\nconst output = [];\nlet rank = 1;\n\nfor (const route of [...profitableRoutes, ...unprofitableRoutes]) {\n  output.push({ json: { rank, ...route } });\n  rank += 1;\n}\n\nif (output.length === 0) {\n  output.push({\n    json: {\n      message:\n        unverifiedCount > 0\n          ? \"No profitable arbitrage opportunity found among routes with real logistics cost data. \" +\n            `${unverifiedCount} additional opportunities exist but were dropped because no logistics cost data ` +\n            \"was available for those market pairs — add route coverage for those markets to check them.\"\n          : \"No profitable arbitrage opportunity found.\",\n      markets_checked: consensusRecords.length,\n      opportunities_checked: rawOpportunitiesCount,\n      summary,\n    },\n  });\n} else {\n  output[0].json.summary = summary;\n}\n\nreturn output;\n"
+      },
+      "id": "af8e2ff8-3e22-4f80-a71a-eba20adedd7b",
+      "name": "Arbitrage Calculator1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        1760
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564",
+          "mode": "list",
+          "cachedResultName": "Dynamic_Agronomic",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 981442787,
+          "mode": "list",
+          "cachedResultName": "Logistics",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1PHIAAMDpobnLqEZTWhOnW0YUw5RY2QEA5X_kdR8U564/edit#gid=981442787"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -352,
+        752
+      ],
+      "id": "a8f867ea-a303-4023-9114-59df6611b3d4",
+      "name": "Real Logistics",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "CVk7yQMP6tYVIzmM",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BKSM5L4RJ",
+          "mode": "list",
+          "cachedResultName": "admin-alerts"
+        },
+        "text": "=📉 *Arbitrage Scan Complete — No Profitable Routes*\n\n*Scan Time:* {{ $now }}\n*Markets Scanned:* 4\n*Commodities Evaluated:* {{ $json.commodity }}\n*Total Routes Checked:* {{ $json.route }}\n\nNo profitable arbitrage opportunities were identified in this cycle. All evaluated routes fell below the minimum profit margin threshold (15%) after logistics costs were deducted.\n\nNext scan will run automatically. ⏰\n\n_Dynamic Agronomic Supply Chain Router 🌾_",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        2576,
+        560
+      ],
+      "id": "408ae453-d966-410f-9b25-eaec71c6e31a",
+      "name": "Notify Admin for Non Profitable",
+      "webhookId": "6bbc6c03-813d-4a39-9ca2-0c964a94ec71",
+      "credentials": {
+        "slackApi": {
+          "id": "ue2R656RpgZyDxZT",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BKSM5L4RJ",
+          "mode": "list",
+          "cachedResultName": "admin-alerts"
+        },
+        "text": "=📉 *Arbitrage Scan Complete — No Profitable Routes*\n\n*Markets Scanned:* 4\n*Commodities Evaluated:* {{ $json.commodity }}\n*Total Routes Checked:* {{ $json.route }}\n\nNo profitable arbitrage opportunities were identified in this cycle. All evaluated routes fell below the minimum profit margin threshold (15%) after logistics costs were deducted.\n\nNext scan will run automatically. ⏰\n\n_Dynamic Agronomic Supply Chain Router 🌾_",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        1536,
+        1920
+      ],
+      "id": "541ce054-ba9a-43aa-8651-1d8738f4dda4",
+      "name": "Notify Admin for Non Profit",
+      "webhookId": "6bbc6c03-813d-4a39-9ca2-0c964a94ec71",
+      "credentials": {
+        "slackApi": {
+          "id": "ue2R656RpgZyDxZT",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 🌐 DATA COLLECTION\n\nCollects commodity prices from:\n\n- PriceChop API\n- FoodPrices.ng\n- HarvestIQ\n- Oja of North",
+        "height": 208,
+        "width": 304
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -448,
+        -336
+      ],
+      "id": "e79f65be-071b-425f-ab45-983ea4f89465",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# 🧠 DECISION ENGINE\n\nCalculates arbitrage profit.\n\nOnly profitable routes continue to AI manifest generation.",
+        "height": 208,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        -48
+      ],
+      "id": "a0abe528-2722-4752-9356-788e7124dfe9",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "# 🟢 DATA PROCESSING\n\nReceives commodity prices from\nmultiple APIs.\n\n• Merge market datasets\n• Clean & standardize records\n• Remove invalid entries\n• Prepare data for analysis\n• Store commodity lists\n• Merge logistics costs",
+        "height": 272,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -112
+      ],
+      "id": "72a17921-4b64-484d-bb15-a9b4d66c4a69",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "# 🤖 AI AUTOMATION\n\nGenerate shipping documents\nusing AI.\n\n• Create markdown manifest\n• Summarize route details\n• Format shipment information\n• Prepare logistics report",
+        "height": 240,
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2912,
+        -320
+      ],
+      "id": "6fedb9e1-5cac-484c-957a-6a5956d44f42",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "# 📊 EXECUTION & REPORTING\n\nExecute approved routes.\n\n• Update Master Ledger\n• Notify logistics partners\n• Send Slack alerts\n• Record transaction history\n• Maintain audit trail",
+        "height": 240,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        3408,
+        -320
+      ],
+      "id": "00db666d-0767-47c5-9c54-5fc2949830ea",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "# 🧠 DECISION ENGINE\n\nCalculates arbitrage profit.\n\nOnly profitable routes continue to AI manifest generation.",
+        "height": 208,
+        "width": 416
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        1440
+      ],
+      "id": "ae0863d5-17c9-4cbe-a07a-4df24a0856c8",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# 🤖 AI AUTOMATION\n\nGenerate shipping documents\nusing AI.\n\n• Create markdown manifest\n• Summarize route details\n• Format shipment information\n• Prepare logistics report",
+        "height": 240,
+        "width": 336
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1888,
+        1200
+      ],
+      "id": "525c740e-fe53-4c4b-84b7-e31e49b8aa12",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "# 📊 EXECUTION & REPORTING\n\nExecute approved routes.\n\n• Update Master Ledger\n• Notify logistics partners\n• Send Slack alerts\n• Record transaction history\n• Maintain audit trail",
+        "height": 240,
+        "width": 432
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2352,
+        1200
+      ],
+      "id": "7c7bb85c-d292-4d0c-9e7d-575800eff733",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BKKMWPJJH",
+          "mode": "list",
+          "cachedResultName": "logistics-alerts"
+        },
+        "text": "=🚀 *PROFITABLE ROUTE IDENTIFIED!*  \n*Scan Time:* {{ $now }}\n*Opportunity:* #{{ $('Routes Profitable & None Profitable').item.json.rank }} \n*Commodity:* {{ $('Routes Profitable & None Profitable').item.json.commodity }} \n*Route:* {{ $('Routes Profitable & None Profitable').item.json.buy_market }} → {{ $('Routes Profitable & None Profitable').item.json.sell_market }}  \n💰 *Financial Summary:* \nBuy Price: NGN {{ $('Routes Profitable & None Profitable').item.json.buy_price }} \nSell Price: NGN {{ $('Routes Profitable & None Profitable').item.json.sell_price }} \nLogistics Cost: NGN {{ $('Routes Profitable & None Profitable').item.json.logistics_cost }} \nNet Profit: NGN {{ $('Routes Profitable & None Profitable').item.json.net_profit }} \nMargin: {{ $('Routes Profitable & None Profitable').item.json.margin_percent }}%  \n📋 Full manifest saved to Master Ledger _Dynamic Agronomic Router 🌾_",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        3680,
+        -32
+      ],
+      "id": "7fb59842-444f-434e-b156-9b9a318d3ffb",
+      "name": "Notify Logistics",
+      "webhookId": "6bbc6c03-813d-4a39-9ca2-0c964a94ec71",
+      "credentials": {
+        "slackApi": {
+          "id": "ue2R656RpgZyDxZT",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BKKMWPJJH",
+          "mode": "list",
+          "cachedResultName": "logistics-alerts"
+        },
+        "text": "=🚀 *PROFITABLE ROUTE IDENTIFIED!*  \n*Opportunity:* #{{ $('Routes Profitable & None Profitable').item.json.rank }} \n*Commodity:* {{ $('Routes Profitable & None Profitable').item.json.commodity }} \n*Route:* {{ $('Routes Profitable & None Profitable').item.json.buy_market }} → {{ $('Routes Profitable & None Profitable').item.json.sell_market }}  \n💰 *Financial Summary:* \nBuy Price: NGN {{ $('Routes Profitable & None Profitable').item.json.buy_price }} \nSell Price: NGN {{ $('Routes Profitable & None Profitable').item.json.sell_price }} \nLogistics Cost: NGN {{ $('Routes Profitable & None Profitable').item.json.logistics_cost }} \nNet Profit: NGN {{ $('Routes Profitable & None Profitable').item.json.net_profit }} \nMargin: {{ $('Routes Profitable & None Profitable').item.json.margin_percent }}%  \n📋 Full manifest saved to Master Ledger _Dynamic Agronomic Router 🌾_",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.5,
+      "position": [
+        2640,
+        1520
+      ],
+      "id": "3985d9e2-d186-40d1-b974-061b91996bd5",
+      "name": "Notify Logistics1",
+      "webhookId": "6bbc6c03-813d-4a39-9ca2-0c964a94ec71",
+      "credentials": {
+        "slackApi": {
+          "id": "ue2R656RpgZyDxZT",
+          "name": "Slack account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Agricultural Supply Chain and Logistics Intelligence Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Commodity List": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Logistics": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Arbitrage Calculator1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Master Ledger2": {
+      "main": [
+        [
+          {
+            "node": "Notify Logistics1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agricultural Supply Chain and Logistics Intelligence Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agricultural Supply Chain and Logistics Intelligence Agent": {
+      "main": [
+        [
+          {
+            "node": "Master Ledger2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Routes Profitable & None Profitable": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Admin for Non Profit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HarvestIQ - All Prices2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Ola of North - All Summaries2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 3
+          }
+        ]
+      ]
+    },
+    "FoodPrices.ng - All Lagos2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "PriceNija - All Prices2": {
+      "main": [
+        [
+          {
+            "node": "Merge2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "HarvestIQ - All Prices2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "FoodPrices.ng - All Lagos2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "PriceNija - All Prices2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Ola of North - All Summaries2",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Real Logistics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge2": {
+      "main": [
+        [
+          {
+            "node": "Sanitizing node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Append Commodity List",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append Commodity False List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sanitizing node": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Arbitrage Calculator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "No Operation, do nothing1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Append Commodity List": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [
+          {
+            "node": "Agricultural Supply Chain and Logistics Intelligence Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Master Ledger3": {
+      "main": [
+        [
+          {
+            "node": "Notify Logistics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Agricultural Supply Chain and Logistics Intelligence Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agricultural Supply Chain and Logistics Intelligence Agent1": {
+      "main": [
+        [
+          {
+            "node": "Master Ledger3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Routes Profitable & None Profitable1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Notify Admin for Non Profitable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Commodity List",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Logistics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Arbitrage Calculator": {
+      "main": [
+        [
+          {
+            "node": "Routes Profitable & None Profitable1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Arbitrage Calculator1": {
+      "main": [
+        [
+          {
+            "node": "Routes Profitable & None Profitable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Real Logistics": {
+      "main": [
+        [
+          {
+            "node": "No Operation, do nothing1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "errorWorkflow": "09vsSrH1ANlbizJJ",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "7dbe4e76-5c0a-4316-99d8-162a7806963d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "091d15088547bf5d0a86196676a51dc4b21172d5c73045b70c8b988ef8b08d3f"
+  },
+  "nodeGroups": [],
+  "id": "6QocSDr3DrKioe5B",
+  "tags": []
+}

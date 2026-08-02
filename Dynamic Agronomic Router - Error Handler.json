@@ -1,0 +1,144 @@
+{
+  "name": "Dynamic Agronomic Router - Error Handler",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ad276f38-ef0f-4c2c-97ba-3d8e469edd82",
+              "name": "workflow_name",
+              "value": "={{ $json.workflow.name }}",
+              "type": "string"
+            },
+            {
+              "id": "52280ba5-0f6b-4893-a7cf-81c2de8429ea",
+              "name": "error_message",
+              "value": "={{ $json.execution.error.message }}",
+              "type": "string"
+            },
+            {
+              "id": "0ac55f55-41fb-404c-9e15-9ba4c93e4afb",
+              "name": "error_node",
+              "value": "={{ $json.execution.lastNodeExecuted }}",
+              "type": "string"
+            },
+            {
+              "id": "b9d31208-ecb6-4c85-b623-3b21f4f53de0",
+              "name": "error_time",
+              "value": "={{ $now }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        224,
+        0
+      ],
+      "id": "54903577-ce87-4149-b772-0736fb75f93b",
+      "name": "Extract Error Details"
+    },
+    {
+      "parameters": {
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C0BKSM5L4RJ",
+          "mode": "list",
+          "cachedResultName": "admin-alerts"
+        },
+        "text": "=🚨 *SYSTEM ALERT — Agronomic Router Failed!*\n\n*Workflow:* {{ $json.workflow_name }}\n*Failed at Node:* {{ $json.error_node }}\n*Error:* {{ $json.error_message }}\n*Time:* {{ $json.error_time }}\n\nPlease investigate immediately! ⚠️",
+        "otherOptions": {
+          "includeLinkToWorkflow": false
+        }
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.4,
+      "position": [
+        544,
+        0
+      ],
+      "id": "203de1b2-54c8-45cc-9782-6aec025f5e93",
+      "name": "Alert Admin For Errors",
+      "webhookId": "3ecd1d16-fa07-483f-a093-fe1c321c02b3",
+      "credentials": {
+        "slackApi": {
+          "id": "ue2R656RpgZyDxZT",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Dynamic Agronomic Router - Error Handler",
+        "height": 80,
+        "width": 416,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        80,
+        -144
+      ],
+      "id": "5b4624dc-a8dc-4128-85b5-b1fd4f86402a",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        0
+      ],
+      "id": "82847c3b-0127-4a8a-a3ab-8dd64566fbc5",
+      "name": "Catch Workflow Errors"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Extract Error Details": {
+      "main": [
+        [
+          {
+            "node": "Alert Admin For Errors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Catch Workflow Errors": {
+      "main": [
+        [
+          {
+            "node": "Extract Error Details",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "989a6bb7-2c91-4da8-8d0b-97cfa6a3907d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "091d15088547bf5d0a86196676a51dc4b21172d5c73045b70c8b988ef8b08d3f"
+  },
+  "nodeGroups": [],
+  "id": "09vsSrH1ANlbizJJ",
+  "tags": []
+}
