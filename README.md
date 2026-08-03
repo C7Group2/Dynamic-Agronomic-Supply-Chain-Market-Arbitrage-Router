@@ -77,7 +77,15 @@ Agricultural produce often rots at farm-gate markets in northern producing hubs 
 
 ### End-to-End System Architecture
 
-**Figma Slides Presentation Link:** [View Presentation Deck](#)
+**Real Time Data Workflow:**
+![Real Time Data Workflow](REAL%20TIME%20DATA%20WORKFLOW.png)
+
+**Simulated Data Workflow:**
+![Simulated Data Workflow](SIMULATED%20DATA%20WORKFLOW.png)
+
+**Error Handler Workflow:**
+![Error Handler Workflow](ERROR%20HANDLER%20WORKFLOW.png)
+**Figma Slides Presentation Link:** [View Presentation Deck](https://www.figma.com/deck/qEUST8BFVL4yiZVoGOJjTb/Dynamic-Agronomic-Supply-Chain-%E2%94%82-Market-Arbitrage-Router?node-id=6-113))
 
 ### UI/UX Design Strategy & Figma Slides Deck Architecture
 
